@@ -28,8 +28,8 @@
                 beaker: <path d="M4.5 3h15M6 3v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V3M6 14h12" />,
                 lightbulb: <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5 5 0 0 0 8 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5M9 18h6M10 22h4" />,
                 'check-circle-2': <g><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></g>,
-                quote: <path d="M3 21c3 0 7-1 7-8V5H3v8h4c0 2-1 3-4 5zM14 21c3 0 7-1 7-8V5h-7v8h4c0 2-1 3-4 5z" />,
-                'bar-chart-3': <path d="M3 3v18h18M18 17V9M13 17V5M8 17v-3" />
+                'bar-chart-3': <path d="M3 3v18h18M18 17V9M13 17V5M8 17v-3" />,
+                'users': <g><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></g>
             };
 
             return (
@@ -51,27 +51,19 @@
         };
 
         const App = () => {
-            // Datos actualizados con colores más distintivos para las mesas
+            // Datos actualizados con las 4 mesas y nombres específicos
             const initialData = [
                 { 
-                    name: 'Mesa 1', oro: 0, plata: 3, rojo: 1, color: '#0033a0', // Azul Tec
-                    idea: '“Si no usas datos en tiempo real para decidir, estás compitiendo a ciegas.”'
+                    name: 'Mesa 1: TNTS', oro: 1, plata: 2, rojo: 0, color: '#0033a0' // Azul Institucional
                 },
                 { 
-                    name: 'Mesa 2', oro: 2, plata: 4, rojo: 1, color: '#6d28d9', // Violeta intenso
-                    idea: '“Las empresas que aprenden más rápido que su mercado son las que sobreviven.”'
+                    name: 'Mesa 2: El pato volador 3.0', oro: 1, plata: 1, rojo: 2, color: '#6d28d9' // Violeta
                 },
                 { 
-                    name: 'Mesa 3', oro: 4, plata: 1, rojo: 2, color: '#059669', // Verde Esmeralda
-                    idea: '“El producto ya no es suficiente: el valor está en el ecosistema.”'
+                    name: 'Mesa 3', oro: 3, plata: 1, rojo: 1, color: '#059669' // Esmeralda
                 },
                 { 
-                    name: 'Mesa 4', oro: 2, plata: 2, rojo: 0, color: '#d97706', // Ámbar/Naranja
-                    idea: '“Las marcas que no generan confianza radical, pierden clientes silenciosamente.”'
-                },
-                { 
-                    name: 'Mesa 5', oro: 2, plata: 0, rojo: 1, color: '#334155', // Gris Pizarra/Oscuro
-                    idea: '“La innovación real hoy incomoda al modelo de negocio existente.”'
+                    name: 'Mesa 4', oro: 3, plata: 1, rojo: 0, color: '#d97706' // Ámbar
                 },
             ];
 
@@ -82,7 +74,7 @@
             ];
 
             const [activeMesas, setActiveMesas] = useState(initialData.map(m => m.name));
-            const maxValue = 4;
+            const maxValue = 3; // Valor máximo en los nuevos datos
             const logoUrl = "https://image.admisiones.tec.mx/lib/fe2b11747364057f721176/m/1/b910ad21-1913-4ce0-8f35-38c908814125.png";
 
             const toggleMesa = (name) => {
@@ -142,7 +134,7 @@
                                     Análisis Comparativo
                                 </div>
                                 <h2 className="text-3xl font-bold leading-tight text-black text-pretty">Estrella de Calor Unificada</h2>
-                                <p className="text-gray-500 text-sm font-medium">Filtre las mesas para analizar perfiles de impacto competitivos.</p>
+                                <p className="text-gray-500 text-sm font-medium">Filtre las mesas para visualizar la huella de cada proyecto en el mercado e investigación.</p>
                                 <div className="grid grid-cols-1 gap-3 pt-4">
                                     {initialData.map(mesa => (
                                         <button 
@@ -150,9 +142,9 @@
                                             onClick={() => toggleMesa(mesa.name)}
                                             className={`flex items-center justify-between p-3 rounded-lg border transition-all ${activeMesas.includes(mesa.name) ? 'bg-gray-50 border-gray-200 shadow-sm' : 'opacity-40 hover:opacity-70'}`}
                                         >
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: mesa.color }}></div>
-                                                <span className="text-sm font-bold text-gray-700 uppercase">{mesa.name}</span>
+                                            <div className="flex items-center gap-3 overflow-hidden">
+                                                <div className="flex-shrink-0 w-3 h-3 rounded-full" style={{ backgroundColor: mesa.color }}></div>
+                                                <span className="text-xs font-bold text-gray-700 uppercase truncate">{mesa.name}</span>
                                             </div>
                                             {activeMesas.includes(mesa.name) && <Icon name="check-circle-2" size={14} className="text-[#0033a0]" />}
                                         </button>
@@ -162,9 +154,9 @@
 
                             <div className="lg:w-2/3 flex justify-center py-10">
                                 <svg width="340" height="340" viewBox="0 0 200 200">
-                                    {/* Guías de red */}
-                                    {[1, 2, 3, 4].map(step => (
-                                        <polygon key={step} points={`100,${100 - (step/4)*85} ${100 + (step/4)*73},${100 + (step/4)*42} ${100 - (step/4)*73},${100 + (step/4)*42}`} fill="none" stroke="#e2e8f0" strokeWidth="1" />
+                                    {/* Guías de red (3 niveles) */}
+                                    {[1, 2, 3].map(step => (
+                                        <polygon key={step} points={`100,${100 - (step/3)*85} ${100 + (step/3)*73},${100 + (step/3)*42} ${100 - (step/3)*73},${100 + (step/3)*42}`} fill="none" stroke="#e2e8f0" strokeWidth="1" />
                                     ))}
                                     <line x1="100" y1="100" x2="100" y2="15" stroke="#cbd5e1" strokeDasharray="2" />
                                     <line x1="100" y1="100" x2="173" y2="142" stroke="#cbd5e1" strokeDasharray="2" />
@@ -192,23 +184,7 @@
                         </div>
                     </section>
 
-                    {/* Reglas de Oro Section */}
-                    <section className="space-y-8">
-                        <div className="flex items-center gap-3 border-b-2 border-black pb-2">
-                            <Icon name="quote" className="text-[#0033a0]" />
-                            <h2 className="text-xl font-bold uppercase tracking-tight">Reglas de Oro de los Negocios</h2>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {initialData.map((mesa, idx) => (
-                                <div key={idx} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm border-t-4 hover:shadow-md transition-shadow" style={{ borderColor: mesa.color }}>
-                                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{mesa.name}</span>
-                                    <p className="mt-4 text-gray-800 font-serif text-lg italic leading-relaxed">{mesa.idea}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    {/* Matriz de Rendimiento Técnico (Colores Recuperados) */}
+                    {/* Matriz de Rendimiento Técnico */}
                     <section className="space-y-6">
                         <div className="flex items-center gap-2 border-b-2 border-[#0033a0] pb-2 text-[#0033a0]">
                             <Icon name="bar-chart-3" />
@@ -227,8 +203,8 @@
                                         <tr key={idx} className="hover:bg-slate-50 transition-colors">
                                             <td className="p-4 text-left font-bold uppercase tracking-tighter">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-2 h-6 rounded-full" style={{ backgroundColor: mesa.color }}></div>
-                                                    {mesa.name}
+                                                    <div className="w-2 h-6 rounded-full flex-shrink-0" style={{ backgroundColor: mesa.color }}></div>
+                                                    <span className="truncate">{mesa.name}</span>
                                                 </div>
                                             </td>
                                             {categories.map(cat => {
@@ -252,6 +228,49 @@
                                     ))}
                                 </tbody>
                             </table>
+                        </div>
+                    </section>
+
+                    {/* Huella de Innovación Individual */}
+                    <section className="space-y-6">
+                        <div className="flex items-center gap-2 border-b-2 border-black pb-2">
+                            <Icon name="users" className="text-black" />
+                            <h2 className="text-xl font-bold uppercase tracking-tight">Huella de Innovación</h2>
+                        </div>
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                            {initialData.map((mesa, idx) => (
+                                <div key={idx} className="bg-white p-4 rounded-xl border border-gray-100 flex flex-col items-center hover:border-[#0033a0] transition-all group shadow-sm">
+                                    <span className="text-[10px] font-black text-gray-400 mb-2 uppercase tracking-[0.2em] group-hover:text-[#0033a0] text-center h-8 flex items-center line-clamp-2">{mesa.name}</span>
+                                    
+                                    <svg width="120" height="120" viewBox="0 0 200 200">
+                                        <polygon points={`100,15 173,142 27,142`} fill="none" stroke="#f1f5f9" strokeWidth="1" />
+                                        <line x1="100" y1="100" x2="100" y2="15" stroke="#f1f5f9" />
+                                        <line x1="100" y1="100" x2="173" y2="142" stroke="#f1f5f9" />
+                                        <line x1="100" y1="100" x2="27" y2="142" stroke="#f1f5f9" />
+                                        <polygon
+                                            points={getRadarPoints(mesa, 100, 85)}
+                                            fill={`${mesa.color}11`}
+                                            stroke={mesa.color}
+                                            strokeWidth="3"
+                                        />
+                                    </svg>
+
+                                    <div className="mt-4 flex justify-between w-full px-2 border-t pt-2 border-gray-50 text-[10px] font-black uppercase">
+                                       <div className="text-center">
+                                          <p className="text-gray-400">IND</p>
+                                          <p>{mesa.oro}</p>
+                                       </div>
+                                       <div className="text-center">
+                                          <p className="text-gray-400">ACA</p>
+                                          <p>{mesa.plata}</p>
+                                       </div>
+                                       <div className="text-center">
+                                          <p className="text-gray-400">IDEA</p>
+                                          <p className="text-red-500">{mesa.rojo}</p>
+                                       </div>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </section>
                 </div>
